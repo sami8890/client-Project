@@ -1,16 +1,70 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { Menu } from "lucide-react";
+import { Menu, ChevronDown } from "lucide-react";
 import Link from "next/link";
+import gsap from "gsap";
 
 const Navbar = () => {
-  const [isScrolled, setIsScrolled] = useState(false);
+  const [,setIsScrolled] = useState(false);
+  const navRef = useRef(null);
+  const logoRef = useRef(null);
+  const linksRef = useRef<HTMLDivElement>(null);
+  const ctaRef = useRef(null);
 
   useEffect(() => {
+    // Initial animation when component mounts
+    const tl = gsap.timeline();
+
+    tl.from(logoRef.current, {
+      y: -50,
+      opacity: 0,
+      duration: 0.8,
+      ease: "power3.out",
+    })
+      .from(
+        linksRef.current ? Array.from(linksRef.current.children) : [],
+        {
+          y: -30,
+          opacity: 0,
+          duration: 0.6,
+          stagger: 0.1,
+          ease: "power2.out",
+        },
+        "-=0.4"
+      )
+      .from(
+        ctaRef.current,
+        {
+          y: -30,
+          opacity: 0,
+          duration: 0.6,
+          ease: "power2.out",
+        },
+        "-=0.4"
+      );
+
+    // Scroll animation
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 10);
+      const scrolled = window.scrollY > 10;
+      setIsScrolled(scrolled);
+
+      if (scrolled) {
+        gsap.to(navRef.current, {
+          backgroundColor: "rgba(0, 0, 0, 0.8)",
+          borderBottom: "1px solid rgba(8, 145, 178, 0.2)",
+          duration: 0.3,
+          ease: "power2.out",
+        });
+      } else {
+        gsap.to(navRef.current, {
+          backgroundColor: "transparent",
+          borderBottom: "1px solid rgba(8, 145, 178, 0)",
+          duration: 0.3,
+          ease: "power2.out",
+        });
+      }
     };
 
     window.addEventListener("scroll", handleScroll);
@@ -18,45 +72,116 @@ const Navbar = () => {
   }, []);
 
   const navItems = [
-    { label: "Our Services", href: "/services" },
+    {
+      label: "Services",
+      href: "/services",
+      subItems: [
+        { label: "SEO Optimization", href: "/services/seo" },
+        { label: "Content Strategy", href: "/services/content" },
+        { label: "Analytics", href: "/services/analytics" },
+      ],
+    },
     { label: "Blog", href: "/blog" },
     { label: "Contact", href: "/contact" },
   ];
 
+  // Animation for dropdown hover
+  interface DropdownHoverEvent extends React.MouseEvent<HTMLDivElement> {
+    currentTarget: HTMLDivElement & {
+      querySelector: (selectors: string) => HTMLElement | null;
+    };
+  }
+
+  interface DropdownHoverHandler {
+    (e: DropdownHoverEvent, entering: boolean): void;
+  }
+
+  const handleDropdownHover: DropdownHoverHandler = (e, entering) => {
+    const dropdown = e.currentTarget.querySelector(".dropdown-menu");
+    const arrow = e.currentTarget.querySelector(".dropdown-arrow");
+
+    if (dropdown && arrow) {
+      if (entering) {
+        gsap.to(dropdown, {
+          opacity: 1,
+          y: 0,
+          duration: 0.3,
+          ease: "power2.out",
+        });
+        gsap.to(arrow, {
+          rotation: 180,
+          duration: 0.3,
+          ease: "power2.out",
+        });
+      } else {
+        gsap.to(dropdown, {
+          opacity: 0,
+          y: -10,
+          duration: 0.3,
+          ease: "power2.out",
+        });
+        gsap.to(arrow, {
+          rotation: 0,
+          duration: 0.3,
+          ease: "power2.out",
+        });
+      }
+    }
+  };
+
   return (
     <nav
-      className={`fixed top-0 left-0 right-0 z-50 py-4 transition-all duration-300 ${
-        isScrolled ? "bg-white/95 backdrop-blur-md shadow-sm" : "bg-transparent"
-      }`}
+      ref={navRef}
+      className="fixed top-0 left-0 right-0 z-50 backdrop-blur-md"
     >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between py-4">
           {/* Logo */}
-          <div className="flex items-center">
+          <div ref={logoRef} className="flex items-center">
             <Link
               href="/"
-              className={`text-2xl font-bold transition-colors duration-300 ${
-                isScrolled ? "text-cyan-600" : "text-white"
-              }`}
+              className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-cyan-200"
             >
               The Contnter Growth collective
             </Link>
           </div>
 
           {/* Desktop Navigation */}
-          <div className="hidden space-x-8 md:flex">
+          <div ref={linksRef} className="hidden md:flex items-center space-x-8">
             {navItems.map((item) => (
-              <a
+              <div
                 key={item.label}
-                href={item.href}
-                className={`text-sm font-medium transition-colors duration-300 ${
-                  isScrolled
-                    ? "text-gray-600 hover:text-cyan-600"
-                    : "text-gray-300 hover:text-white"
-                }`}
+                className="relative"
+                onMouseEnter={(e) => handleDropdownHover(e, true)}
+                onMouseLeave={(e) => handleDropdownHover(e, false)}
               >
-                {item.label}
-              </a>
+                <a
+                  href={item.href}
+                  className="flex items-center text-sm font-medium text-gray-400 hover:text-cyan-300 transition-colors duration-300"
+                >
+                  {item.label}
+                  {item.subItems && (
+                    <ChevronDown className="dropdown-arrow ml-1 w-4 h-4" />
+                  )}
+                </a>
+
+                {/* Dropdown Menu */}
+                {item.subItems && (
+                  <div className="dropdown-menu absolute left-0 top-full mt-2 w-48 opacity-0 translate-y-[-10px]">
+                    <div className="bg-gray-900 border border-gray-800 rounded-lg shadow-xl py-2">
+                      {item.subItems.map((subItem) => (
+                        <a
+                          key={subItem.label}
+                          href={subItem.href}
+                          className="block px-4 py-2 text-sm text-gray-400 hover:text-cyan-300 hover:bg-gray-800/50 transition-colors duration-150"
+                        >
+                          {subItem.label}
+                        </a>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
             ))}
           </div>
 
@@ -67,39 +192,61 @@ const Navbar = () => {
                 <Button
                   variant="ghost"
                   size="icon"
-                  className={`transition-colors duration-300 ${
-                    isScrolled ? "text-cyan-600" : "text-white"
-                  }`}
+                  className="text-gray-400 hover:text-cyan-300"
                 >
                   <Menu className="h-6 w-6" />
                   <span className="sr-only">Open menu</span>
                 </Button>
               </SheetTrigger>
-              <SheetContent side="right" className="w-64 bg-cyan-500">
-                <nav className="flex flex-col gap-4">
+              <SheetContent
+                side="right"
+                className="bg-gray-900 border-l border-gray-800"
+              >
+                <nav className="flex flex-col gap-4 mt-8">
                   {navItems.map((item) => (
-                    <a
-                      key={item.label}
-                      href={item.href}
-                      className="text-lg font-medium text-white hover:text-white/80 transition-colors duration-200"
-                    >
-                      {item.label}
-                    </a>
+                    <div key={item.label}>
+                      <a
+                        href={item.href}
+                        className="text-lg font-medium text-gray-400 hover:text-cyan-300 transition-colors duration-200"
+                      >
+                        {item.label}
+                      </a>
+                      {item.subItems && (
+                        <div className="ml-4 mt-2 space-y-2">
+                          {item.subItems.map((subItem) => (
+                            <a
+                              key={subItem.label}
+                              href={subItem.href}
+                              className="block text-sm text-gray-500 hover:text-cyan-300 transition-colors duration-150"
+                            >
+                              {subItem.label}
+                            </a>
+                          ))}
+                        </div>
+                      )}
+                    </div>
                   ))}
+                  <Button
+                    className="mt-4 w-full bg-cyan-500 hover:bg-cyan-400 text-black font-medium transition-colors duration-200"
+                    onClick={() =>
+                      window.open(
+                        "https://www.cal.com/contntr/call",
+                        "_blank",
+                        "noopener,noreferrer"
+                      )
+                    }
+                  >
+                    Book a Call
+                  </Button>
                 </nav>
               </SheetContent>
             </Sheet>
           </div>
 
           {/* Desktop CTA Button */}
-          <div className="hidden md:block">
+          <div ref={ctaRef} className="hidden md:block">
             <Button
-              variant="outline"
-              className={`transition-all duration-300 ${
-                isScrolled
-                  ? "border-cyan-600 text-cyan-600 hover:bg-cyan-600 hover:text-white"
-                  : "border-white text-zinc-700 hover:bg-white hover:text-cyan-700"
-              }`}
+              className="px-6 py-2 bg-cyan-500 hover:bg-cyan-400 text-black font-medium rounded-lg transition-colors duration-200"
               onClick={() =>
                 window.open(
                   "https://www.cal.com/contntr/call",
