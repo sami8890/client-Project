@@ -35,7 +35,7 @@ const Footer = () => {
               href="/"
               className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-cyan-200"
             >
-              The Contntr Growth collective
+              The Contntr Growth Collective
             </Link>
             <p className="text-gray-400 text-sm">
               Empowering businesses with data-driven strategies for sustainable
@@ -131,7 +131,13 @@ const Footer = () => {
 };
 
 // Social media link component
-const SocialLink = ({ href, icon: Icon }: { href: string; icon: React.ComponentType<{ className?: string }> }) => (
+const SocialLink = ({
+  href,
+  icon: Icon,
+}: {
+  href: string;
+  icon: React.ComponentType<{ className?: string }>;
+}) => (
   <a
     href={href}
     target="_blank"

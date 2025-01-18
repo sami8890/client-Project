@@ -138,27 +138,6 @@ const CapabilitiesSection = () => {
               </motion.div>
             ))}
           </motion.div>
-
-          {/* Call to Action */}
-          <motion.div
-            variants={itemVariants}
-            className="flex justify-center mt-12"
-          >
-            <button
-              className="inline-flex items-center gap-2 px-6 py-3 bg-cyan-500 hover:bg-cyan-400 
-                         text-black font-medium rounded-lg transition-colors duration-200 group"
-              onClick={() =>
-                window.open(
-                  "https://www.cal.com/contntr/call",
-                  "_blank",
-                  "noopener,noreferrer"
-                )
-              }
-            >
-              Start Your Growth Journey
-              <ArrowUpRight className="w-4 h-4 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform duration-200" />
-            </button>
-          </motion.div>
         </motion.div>
       </div>
     </div>
