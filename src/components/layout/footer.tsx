@@ -35,7 +35,7 @@ const Footer = () => {
               href="/"
               className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-cyan-200"
             >
-              The Contnter Growth collective
+              The Contntr Growth collective
             </Link>
             <p className="text-gray-400 text-sm">
               Empowering businesses with data-driven strategies for sustainable

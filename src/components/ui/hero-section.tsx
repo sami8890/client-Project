@@ -145,6 +145,7 @@
 "use client";
 import React from "react";
 import { ArrowRight, Search, BarChart3, TrendingUp, Zap } from "lucide-react";
+import { TypingText } from "./typing-text";
 
 const HeroSection = () => {
   return (
@@ -179,8 +180,11 @@ const HeroSection = () => {
 
             {/* Subheadline */}
             <p className="text-lg text-gray-400 max-w-xl">
-              Get more organic traffic with AI-powered SEO tools that help you
-              outrank your competition and drive qualified leads.
+              <TypingText text=" Get more organic traffic with AI-powered SEO tools that help you
+              outrank your competition and drive qualified leads.">
+                
+              </TypingText>
+             
             </p>
 
             {/* Stats */}
