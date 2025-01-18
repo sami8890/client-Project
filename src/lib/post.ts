@@ -1,6 +1,6 @@
-import { BlogPost } from '@/app/lib/types';
+import { BlogPost } from '@/lib/types';
 
-export const posts: BlogPost[] = [          
+export const posts: BlogPost[] = [
     {
         slug: "seo-best-practices-2025",
         title: "10 SEO Best Practices to Dominate Search Rankings in 2025",

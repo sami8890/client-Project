@@ -76,9 +76,9 @@ const Navbar = () => {
       label: "Services",
       href: "/services",
       subItems: [
-        { label: "SEO Optimization", href: "/services/seo" },
-        { label: "Content Strategy", href: "/services/content" },
-        { label: "Analytics", href: "/services/analytics" },
+        { label: "SEO Optimization", href: "/" },
+        { label: "Content Strategy", href: "/" },
+        { label: "Content writing", href: "/" },
       ],
     },
     { label: "Blog", href: "/blog" },
