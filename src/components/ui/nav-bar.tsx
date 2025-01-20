@@ -7,7 +7,7 @@ import Link from "next/link";
 import gsap from "gsap";
 
 const Navbar = () => {
-  const [isScrolled, setIsScrolled] = useState(false);
+  const [, setIsScrolled] = useState(false);
   const navRef = useRef(null);
   const logoRef = useRef(null);
   const linksRef = useRef<HTMLDivElement>(null);

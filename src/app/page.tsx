@@ -8,7 +8,7 @@ export default function Home() {
   return (
     <main className="mx-auto ">
       <HeroSection />
-      {/* <ProcessSection/> */}
+      <ProcessSection/>
       <ImpactSection/>
       <CTAVideoSection/>
       <FAQSection/>

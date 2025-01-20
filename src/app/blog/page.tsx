@@ -4,7 +4,7 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { Clock, ArrowRight, Tag, ChevronRight } from "lucide-react";
+import { Clock, ArrowRight,} from "lucide-react";
 
 const categories = [
   "All",
