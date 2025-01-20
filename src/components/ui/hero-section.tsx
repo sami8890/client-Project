@@ -180,7 +180,7 @@ const HeroSection = () => {
 
             {/* Subheadline */}
             <p className="text-lg text-gray-400 max-w-xl">
-              <TypingText text="Get more organic traffic with AI-powered SEO tools that help you
+              <TypingText text="  More organic traffic with AI-powered SEO tools that help you
               outrank your competition and drive qualified leads." />             
             </p>
 
