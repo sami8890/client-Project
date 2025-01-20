@@ -1,11 +1,6 @@
-"use client"
+"use client";
 import React, { useState, useMemo } from "react";
-import {
-  ChevronDown,
-  Sparkles,
-  Search,
-  ArrowRight,
-} from "lucide-react";
+import { ChevronDown, Sparkles, Search, ArrowRight } from "lucide-react";
 
 const FAQSection = () => {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
@@ -186,11 +181,19 @@ const FAQSection = () => {
             Still have questions?
           </h3>
           <p className="text-gray-400 mb-6">
-            Can&apos;t find what you&apos;re looking for? Our team is here to help.
+            Can&apos;t find what you&apos;re looking for? Our team is here to
+            help.
           </p>
           <button
             className="inline-flex items-center px-6 py-3 bg-cyan-500 hover:bg-cyan-400 
                        text-black font-medium rounded-lg transition-colors duration-200 group"
+            onClick={() =>
+              window.open(
+                "https://www.cal.com/contntr/call",
+                "_blank",
+                "noopener,noreferrer"
+              )
+            }
           >
             Contact Support
             <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />

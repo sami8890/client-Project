@@ -7,7 +7,7 @@ import Link from "next/link";
 import gsap from "gsap";
 
 const Navbar = () => {
-  const [,setIsScrolled] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
   const navRef = useRef(null);
   const logoRef = useRef(null);
   const linksRef = useRef<HTMLDivElement>(null);
@@ -85,7 +85,6 @@ const Navbar = () => {
     { label: "Contact", href: "/contact" },
   ];
 
-  // Animation for dropdown hover
   interface DropdownHoverEvent extends React.MouseEvent<HTMLDivElement> {
     currentTarget: HTMLDivElement & {
       querySelector: (selectors: string) => HTMLElement | null;
@@ -134,13 +133,13 @@ const Navbar = () => {
       ref={navRef}
       className="fixed top-0 left-0 right-0 z-50 backdrop-blur-md"
     >
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto px-2 sm:px-4 lg:px-6">
         <div className="flex items-center justify-between py-4">
           {/* Logo */}
-          <div ref={logoRef} className="flex items-center">
+          <div ref={logoRef} className="flex-shrink-0">
             <Link
               href="/"
-              className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-cyan-200"
+              className="text-lg sm:text-xl md:text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-cyan-200 truncate max-w-[160px] sm:max-w-[200px] md:max-w-none"
             >
               The Contntr Growth Collective
             </Link>
@@ -155,7 +154,7 @@ const Navbar = () => {
                 onMouseEnter={(e) => handleDropdownHover(e, true)}
                 onMouseLeave={(e) => handleDropdownHover(e, false)}
               >
-                <a
+                <Link
                   href={item.href}
                   className="flex items-center text-sm font-medium text-gray-400 hover:text-cyan-300 transition-colors duration-300"
                 >
@@ -163,20 +162,20 @@ const Navbar = () => {
                   {item.subItems && (
                     <ChevronDown className="dropdown-arrow ml-1 w-4 h-4" />
                   )}
-                </a>
+                </Link>
 
                 {/* Dropdown Menu */}
                 {item.subItems && (
-                  <div className="dropdown-menu absolute left-0 top-full mt-2 w-48 opacity-0 translate-y-[-10px]">
+                  <div className="dropdown-menu absolute left-0 top-full mt-2 w-48 opacity-0 translate-y-[-10px] z-50">
                     <div className="bg-gray-900 border border-gray-800 rounded-lg shadow-xl py-2">
                       {item.subItems.map((subItem) => (
-                        <a
+                        <Link
                           key={subItem.label}
                           href={subItem.href}
                           className="block px-4 py-2 text-sm text-gray-400 hover:text-cyan-300 hover:bg-gray-800/50 transition-colors duration-150"
                         >
                           {subItem.label}
-                        </a>
+                        </Link>
                       ))}
                     </div>
                   </div>
@@ -186,13 +185,13 @@ const Navbar = () => {
           </div>
 
           {/* Mobile Menu */}
-          <div className="md:hidden">
+          <div className="md:hidden flex items-center">
             <Sheet>
               <SheetTrigger asChild>
                 <Button
                   variant="ghost"
                   size="icon"
-                  className="text-gray-400 hover:text-cyan-300"
+                  className="text-gray-400 hover:text-cyan-300 ml-2"
                 >
                   <Menu className="h-6 w-6" />
                   <span className="sr-only">Open menu</span>
@@ -200,27 +199,27 @@ const Navbar = () => {
               </SheetTrigger>
               <SheetContent
                 side="right"
-                className="bg-gray-900 border-l border-gray-800"
+                className="w-[280px] sm:w-[350px] bg-gray-900 border-l border-gray-800 overflow-y-auto"
               >
                 <nav className="flex flex-col gap-4 mt-8">
                   {navItems.map((item) => (
                     <div key={item.label}>
-                      <a
+                      <Link
                         href={item.href}
                         className="text-lg font-medium text-gray-400 hover:text-cyan-300 transition-colors duration-200"
                       >
                         {item.label}
-                      </a>
+                      </Link>
                       {item.subItems && (
                         <div className="ml-4 mt-2 space-y-2">
                           {item.subItems.map((subItem) => (
-                            <a
+                            <Link
                               key={subItem.label}
                               href={subItem.href}
                               className="block text-sm text-gray-500 hover:text-cyan-300 transition-colors duration-150"
                             >
                               {subItem.label}
-                            </a>
+                            </Link>
                           ))}
                         </div>
                       )}

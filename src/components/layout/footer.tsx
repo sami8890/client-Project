@@ -77,39 +77,7 @@ const Footer = () => {
           </div>
         </div>
 
-        {/* Newsletter Section */}
-        <div className="py-8 border-t border-gray-800">
-          <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
-            <div className="max-w-md">
-              <h3 className="text-white font-semibold mb-2">
-                Subscribe to our newsletter
-              </h3>
-              <p className="text-gray-400 text-sm">
-                Get the latest insights on digital growth and SEO strategies.
-              </p>
-            </div>
-            <div className="flex gap-3">
-              <input
-                type="email"
-                placeholder="Enter your email"
-                className="px-4 py-2 bg-gray-900 border border-gray-800 rounded-lg 
-                         text-gray-300 placeholder:text-gray-500 focus:outline-none 
-                         focus:border-cyan-500/50 min-w-[250px]"
-              />
-              <button
-                className="px-4 py-2 bg-cyan-500 hover:bg-cyan-400 text-black 
-                               font-medium rounded-lg transition-colors duration-200 
-                               flex items-center gap-2 group"
-              >
-                Subscribe
-                <ArrowUpRight
-                  className="w-4 h-4 group-hover:translate-x-1 
-                                      group-hover:-translate-y-1 transition-transform"
-                />
-              </button>
-            </div>
-          </div>
-        </div>
+      
 
         {/* Bottom bar */}
         <div

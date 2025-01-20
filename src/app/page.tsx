@@ -6,9 +6,9 @@ import CTAVideoSection from "@/components/ui/vidoo-testimonial-section-call-to-a
 
 export default function Home() {
   return (
-    <main>
+    <main className="mx-auto ">
       <HeroSection />
-      <ProcessSection/>
+      {/* <ProcessSection/> */}
       <ImpactSection/>
       <CTAVideoSection/>
       <FAQSection/>
