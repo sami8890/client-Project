@@ -142,7 +142,7 @@ const Navbar = () => {
               href="/"
               className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-cyan-200"
             >
-              The Contntr Growth collective
+              The Contntr Growth Collective
             </Link>
           </div>
 
